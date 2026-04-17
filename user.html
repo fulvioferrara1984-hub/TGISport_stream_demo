@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Stream</title>
+
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+</head>
+
+<body>
+  <div class="container">
+    
+    <header class="topbar">
+      <img src="assets/logo.png" alt="Company Logo" class="logo">
+    </header>
+
+    <main class="card">
+      <h1 id="userName">Welcome</h1>
+      <p id="userDescription" class="description"></p>
+      <video id="video" controls autoplay muted playsinline></video>
+    </main>
+
+  </div>
+
+  <script src="users.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
