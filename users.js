@@ -1,11 +1,11 @@
 const USERS = {
   user1: {
-    name: "Michael Carter1",
+    name: "Michael Carter",
     description: "Male, 20–30 years old, interested in sports and technology, Marketing area.",
     streamUrl: "http://178.104.195.106:8888/cam1/index.m3u8"
   },
   user2: {
-    name: "Emma Collins",
+    name: "Emma Collins1",
     description: "Female, 20–30 years old, interested in fashion and digital media, Sales area.",
     streamUrl: "http://178.104.195.106:8888/cam2/index.m3u8"
   },
