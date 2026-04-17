@@ -1,6 +1,6 @@
 const USERS = {
   user1: {
-    name: "Michael Carter",
+    name: "Michael Carter1",
     description: "Male, 20–30 years old, interested in sports and technology, Marketing area.",
     streamUrl: "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"
   },
