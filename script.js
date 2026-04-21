@@ -50,10 +50,10 @@ function startHlsJs(video, streamUrl) {
     }
 
     hls = new Hls({
-      liveSyncDurationCount: 1,   // 🔥 più aggressivo → sempre live
-      liveMaxLatencyDurationCount: 3,
-      maxBufferLength: 10,
-      maxMaxBufferLength: 20,
+      liveSyncDurationCount: 3,   // 🔥 più aggressivo → sempre live
+      liveMaxLatencyDurationCount: 10,
+      maxBufferLength: 30,
+      maxMaxBufferLength: 60,
       startPosition: -1 // 🔥 sempre live edge
     });
 
