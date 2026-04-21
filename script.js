@@ -40,13 +40,21 @@ function startNativeHls(video, streamUrl) {
 
 
 function startHlsJs(video, streamUrl) {
+  let retryCount = 0;
+  const maxRetries = 10;
+
   const hls = new Hls({
     liveSyncDurationCount: 3,
     liveMaxLatencyDurationCount: 10
   });
 
-  hls.loadSource(streamUrl);
-  hls.attachMedia(video);
+  function startStream() {
+    console.log("Loading stream...");
+    hls.loadSource(streamUrl);
+    hls.attachMedia(video);
+  }
+
+  startStream();
 
   hls.on(Hls.Events.MANIFEST_PARSED, function () {
     video.muted = true;
@@ -62,8 +70,20 @@ function startHlsJs(video, streamUrl) {
   });
 
   hls.on(Hls.Events.ERROR, function (_, data) {
+    console.log("HLS error:", data);
+
     if (data.fatal) {
-      showError("The live stream could not be loaded.");
+      if (retryCount < maxRetries) {
+        retryCount++;
+        console.log(`Retrying... (${retryCount})`);
+
+        setTimeout(() => {
+          hls.destroy(); // pulisce lo stato
+          startHlsJs(video, streamUrl); // restart completo
+        }, 2000);
+      } else {
+        showError("The live stream could not be loaded.");
+      }
     }
   });
 }
