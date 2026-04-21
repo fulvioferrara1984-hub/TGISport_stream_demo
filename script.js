@@ -40,52 +40,66 @@ function startNativeHls(video, streamUrl) {
 
 
 function startHlsJs(video, streamUrl) {
+  let hls;
   let retryCount = 0;
   const maxRetries = 10;
 
-  const hls = new Hls({
-    liveSyncDurationCount: 3,
-    liveMaxLatencyDurationCount: 10
-  });
+  function initPlayer() {
+    if (hls) {
+      hls.destroy();
+    }
 
-  function startStream() {
-    console.log("Loading stream...");
+    hls = new Hls({
+      liveSyncDurationCount: 1,   // 🔥 più aggressivo → sempre live
+      liveMaxLatencyDurationCount: 3,
+      maxBufferLength: 10,
+      maxMaxBufferLength: 20,
+      startPosition: -1 // 🔥 sempre live edge
+    });
+
     hls.loadSource(streamUrl);
     hls.attachMedia(video);
-  }
 
-  startStream();
+    hls.on(Hls.Events.MANIFEST_PARSED, function () {
+      video.muted = true;
+      video.autoplay = true;
+      video.playsInline = true;
 
-  hls.on(Hls.Events.MANIFEST_PARSED, function () {
-    video.muted = true;
-    video.autoplay = true;
-    video.playsInline = true;
-
-    const playPromise = video.play();
-    if (playPromise !== undefined) {
-      playPromise.catch(() => {
-        showError("Autoplay was blocked by the browser.");
+      video.play().catch(() => {
+        showError("Autoplay blocked.");
       });
-    }
-  });
+    });
 
-  hls.on(Hls.Events.ERROR, function (_, data) {
-    console.log("HLS error:", data);
+    // 🔴 ERROR HANDLING MIGLIORATO
+    hls.on(Hls.Events.ERROR, function (_, data) {
+      console.log("HLS error:", data);
 
-    if (data.fatal) {
+      // retry anche su errori non fatal
       if (retryCount < maxRetries) {
         retryCount++;
-        console.log(`Retrying... (${retryCount})`);
+
+        console.log(`Retrying stream (${retryCount})...`);
 
         setTimeout(() => {
-          hls.destroy(); // pulisce lo stato
-          startHlsJs(video, streamUrl); // restart completo
+          initPlayer();
         }, 2000);
       } else {
-        showError("The live stream could not be loaded.");
+        showError("Stream failed.");
       }
-    }
+    });
+  }
+
+  // 🔴 SE IL VIDEO SI BLOCCA → RESTART
+  video.addEventListener("stalled", () => {
+    console.log("Video stalled → restarting");
+    initPlayer();
   });
+
+  video.addEventListener("waiting", () => {
+    console.log("Buffering...");
+  });
+
+  initPlayer();
 }
 
 function loadUserPage() {
