@@ -114,6 +114,7 @@ function loadUserPage() {
   video.setAttribute("playsinline", "");
   video.setAttribute("webkit-playsinline", "");
 
+  setTimeout(() => {
   if (video.canPlayType("application/vnd.apple.mpegurl")) {
     startNativeHls(video, streamUrl);
   } else if (Hls.isSupported()) {
@@ -121,6 +122,8 @@ function loadUserPage() {
   } else {
     showError("This browser does not support HLS playback.");
   }
+}, 2000);
+  
 }
 
 loadUserPage();
