@@ -83,6 +83,12 @@ function loadUserPage() {
   const video = document.getElementById("video");
   const streamUrl = user.streamUrl;
 
+  // Sostituisci i setAttribute con questi:
+  video.muted = true;
+  video.defaultMuted = true; // Cruciale per Safari Mac
+  video.autoplay = true;
+  video.playsInline = true;
+  
   video.setAttribute("muted", "");
   video.setAttribute("autoplay", "");
   video.setAttribute("playsinline", "");
