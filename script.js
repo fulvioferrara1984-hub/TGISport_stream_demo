@@ -17,22 +17,27 @@ function showError(message) {
 }
 
 function startNativeHls(video, streamUrl) {
-  video.src = streamUrl;
   video.muted = true;
   video.autoplay = true;
   video.playsInline = true;
+  video.src = streamUrl;
 
-  const playPromise = video.play();
-  if (playPromise !== undefined) {
-    playPromise.catch(() => {
-      showError("Autoplay was blocked by the browser.");
-    });
-  }
+  // Safari Mac preferisce che il play avvenga dopo che ha capito cosa deve riprodurre
+  video.addEventListener("loadedmetadata", () => {
+    const playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise.catch((e) => {
+        console.error("Autoplay blocked:", e);
+        showError("Autoplay was blocked. Please click play.");
+      });
+    }
+  }, { once: true });
 
   video.addEventListener("error", () => {
     showError("The live stream could not be loaded.");
   });
 }
+
 
 function startHlsJs(video, streamUrl) {
   const hls = new Hls({
