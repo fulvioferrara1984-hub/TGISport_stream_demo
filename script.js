@@ -136,7 +136,7 @@ function loadUserPage() {
   } else {
     showError("This browser does not support HLS playback.");
   }
-}, 2000);
+}, 3000); // 🔥 3 secondi reali
   
 }
 
