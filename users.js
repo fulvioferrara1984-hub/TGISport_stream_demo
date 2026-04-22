@@ -22,6 +22,6 @@ const USERS = {
   user5: {
     name: "TGI Sport - internal SRT channel",
     description: "TGI Sport internal SRT channel for monitoring of the virtual activities live in Lissone",
-    streamUrl: "https://stream.tgisportvideoplayer.video/single/stream/index.m3u8"
+    streamUrl: "https://stream.tgisportvideoplayer.video/live/index.m3u8"
   }
 };
