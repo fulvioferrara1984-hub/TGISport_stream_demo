@@ -18,7 +18,7 @@ const USERS = {
     name: "Sophia Turner",
     description: "Female, 20–30 years old, interested in communication and customer experience, HR area.",
     streamUrl: "https://stream.tgisportvideoplayer.video/cam4/index.m3u8"
-  }
+  },
   user5: {
     name: "TGI Sport - internal SRT channel",
     description: "TGI Sport internal SRT channel for monitoring of the virtual activities live in Lissone",
