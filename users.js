@@ -17,6 +17,6 @@ const USERS = {
   user4: {
     name: "Sophia Turner",
     description: "Female, 20–30 years old, interested in communication and customer experience, HR area.",
-    streamUrl: "https://stream.tgisportvideoplayer.video/cam3/index.m3u8"
+    streamUrl: "https://stream.tgisportvideoplayer.video/cam4/index.m3u8"
   }
 };
